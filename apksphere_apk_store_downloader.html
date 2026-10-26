@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApkSphere | APK Store & Downloader</title>
+
+    <!-- Dynamic SVG Favicon Injection -->
+    <link id="dynamic-favicon" rel="icon" type="image/svg+xml" href="">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            base: '#0b0f19',
+                            surface: '#111827',
+                            card: '#161e2e',
+                            border: '#1f2937',
+                            hover: '#374151'
+                        },
+                        brand: {
+                            cyan: '#06b6d4',
+                            emerald: '#10b981',
+                            teal: '#14b8a6',
+                            accent: '#3b82f6'
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite ease-in-out'
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.7, transform: 'scale(1)' },
+                            '50%': { opacity: 1, transform: 'scale(1.02)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4 0%, #10b981 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+        }
+        .gradient-border {
+            border-image: linear-gradient(135deg, #06b6d4, #10b981) 1;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-cyan selection:text-black">
+
+    <!-- TOP NAVIGATION HEADER -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-4">
+                
+                <!-- Brand Logo & Name -->
+                <div class="flex items-center space-x-3 cursor-pointer group" onclick="resetView()">
+                    <!-- Futuristic Unique SVG Logo -->
+                    <div class="relative w-10 h-10 flex items-center justify-center">
+                        <svg class="w-10 h-10 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] group-hover:scale-105 transition-transform duration-300" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#06b6d4" />
+                                    <stop offset="50%" stop-color="#10b981" />
+                                    <stop offset="100%" stop-color="#3b82f6" />
+                                </linearGradient>
+                                <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#161e2e" />
+                                    <stop offset="100%" stop-color="#0b0f19" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Outer Hex Shield -->
+                            <path d="M50 5 L85 25 V65 L50 95 L15 65 V25 Z" fill="url(#shieldGrad)" stroke="url(#logoGrad)" stroke-width="4" stroke-linejoin="round"/>
+                            <!-- Glowing Sphere Center -->
+                            <circle cx="50" cy="45" r="16" fill="url(#logoGrad)" fill-opacity="0.85" />
+                            <!-- Android Antennas / Core Lines -->
+                            <path d="M38 33 L32 24 M62 33 L68 24" stroke="#06b6d4" stroke-width="3" stroke-linecap="round"/>
+                            <!-- APK Cube Accent -->
+                            <path d="M50 36 L60 42 V54 L50 60 L40 54 V42 Z" fill="#ffffff" fill-opacity="0.9" />
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-black tracking-wider gradient-text font-mono">ApkSphere</span>
+                </div>
+
+                <!-- Search Input Bar -->
+                <div class="flex-1 max-w-md relative">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search your published apps & games..." class="w-full bg-dark-card text-sm text-gray-100 pl-10 pr-10 py-2.5 rounded-xl border border-dark-border focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-all">
+                        <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Action Button: Add App -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="openAddAppModal()" class="px-4 py-2.5 gradient-bg text-dark-base font-extrabold text-xs sm:text-sm rounded-xl shadow-lg shadow-brand-emerald/20 hover:scale-105 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-plus text-sm"></i>
+                        <span class="hidden sm:inline">Add APK / App</span>
+                        <span class="sm:hidden">Add</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- HEADER BANNER / OVERVIEW -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8 border-b border-dark-border pb-6">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-black text-white flex items-center">
+                    <i class="fa-solid fa-box-archive text-brand-emerald mr-3"></i> Application Catalog
+                </h1>
+                <p class="text-gray-400 text-xs sm:text-sm mt-1">Manage and publish custom Android APK builds, games, and tools directly.</p>
+            </div>
+            
+            <div class="flex items-center space-x-3 self-end md:self-auto">
+                <span id="appCounter" class="text-xs font-mono px-3 py-1.5 rounded-xl bg-dark-card border border-dark-border text-brand-cyan font-bold">
+                    0 Apps Listed
+                </span>
+                <button onclick="seedSampleData()" class="px-3 py-1.5 text-xs font-semibold bg-dark-card hover:bg-dark-hover border border-dark-border text-gray-300 rounded-xl transition flex items-center space-x-1.5" title="Add Sample Demo Apps">
+                    <i class="fa-solid fa-vial text-brand-teal"></i>
+                    <span>Load Demo Data</span>
+                </button>
+                <button onclick="clearAllData()" class="px-3 py-1.5 text-xs font-semibold bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 rounded-xl transition flex items-center space-x-1.5" title="Delete All Apps">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MAIN APPS GRID -->
+        <div id="appsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- App cards rendered dynamically -->
+        </div>
+
+        <!-- EMPTY STATE (SHOWS WHEN NO APPS EXIST) -->
+        <div id="emptyState" class="hidden text-center py-20 glass-panel rounded-3xl border border-dark-border max-w-2xl mx-auto my-8 p-8 space-y-4">
+            <div class="w-20 h-20 mx-auto rounded-3xl bg-dark-card border border-dark-border flex items-center justify-center text-brand-emerald text-4xl shadow-inner">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-extrabold text-white">No apps published yet</h3>
+                <p class="text-gray-400 text-xs sm:text-sm mt-1">Get started by adding your first Android APK application or game build!</p>
+            </div>
+            <div class="pt-2 flex flex-wrap justify-center gap-3">
+                <button onclick="openAddAppModal()" class="px-6 py-3 gradient-bg text-dark-base font-extrabold text-xs sm:text-sm rounded-xl shadow-lg shadow-brand-emerald/20 hover:scale-105 transition">
+                    <i class="fa-solid fa-plus mr-1.5"></i> Add Your First APK
+                </button>
+                <button onclick="seedSampleData()" class="px-6 py-3 bg-dark-card hover:bg-dark-hover text-gray-300 text-xs sm:text-sm font-bold rounded-xl border border-dark-border transition">
+                    <i class="fa-solid fa-vial text-brand-teal mr-1.5"></i> Load Sample Apps
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="border-t border-dark-border bg-dark-surface py-6 text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 rounded-lg gradient-bg flex items-center justify-center text-dark-base font-bold text-[10px]">A</div>
+                <span class="font-bold text-gray-300">ApkSphere &copy; 2026</span>
+                <span>• Personal APK Repository & Manager</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" onclick="openAddAppModal(); return false;" class="hover:text-brand-cyan transition">Publish App</a>
+                <a href="#" onclick="seedSampleData(); return false;" class="hover:text-brand-cyan transition">Restore Demo Data</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ADD / EDIT APP MODAL -->
+    <div id="appModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+        <div class="relative w-full max-w-2xl glass-panel rounded-2xl border border-dark-border shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+            
+            <div class="p-4 sm:p-5 border-b border-dark-border flex items-center justify-between bg-dark-surface">
+                <h3 id="modalFormTitle" class="text-lg font-bold text-white flex items-center">
+                    <i class="fa-solid fa-cloud-arrow-up text-brand-emerald mr-2"></i> Add New APK / App
+                </h3>
+                <button onclick="closeAppModal()" class="w-8 h-8 rounded-full bg-dark-card text-gray-400 hover:text-white flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="appForm" onsubmit="handleSaveApp(event)" class="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs">
+                <input type="hidden" id="appEditId">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">App / Game Title *</label>
+                        <input type="text" id="formTitle" required placeholder="e.g. Cyber Punk Racer" class="w-full bg-dark-card text-gray-100 px-3.5 py-2.5 rounded-xl border border-dark-border focus:outline-none focus:border-brand-cyan">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">Developer / Publisher *</label>
+                        <input type="text" id="formDev" required placeholder="e.g. Apex Gaming Studio" class="w-full bg-dark-card text-gray-100 px-3.5 py-2.5 rounded-xl border border-dark-border focus:outline-none focus:border-brand-cyan">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">Category</label>
+                        <select id="formCategory" class="w-full bg-dark-card text-gray-100 px-3 py-2.5 rounded-xl border border-dark-border focus:outline-none focus:border-brand-cyan">
+                            <option value="Games">Games</option>
+                            <option value="Apps">Apps</option>
+                            <option value="Tools">Tools</option>
+                            <option value="Productivity">Productivity</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Social">Social</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">Version *</label>
+                        <input type="text" id="formVersion" required placeholder="v1.0.0" class="w-full bg-dark-card text-gray-100 px-3 py-2.5 rounded-xl border border-dark-border focus:outline-none focus:border-brand-cyan font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">File Size *</label>
+                        <input type="text" id="formSize" required placeholder="45 MB" class="w-full bg-dark-card text-gray-100 px-3 py-2.5 rounded-xl border border-dark-border focus:outline-none focus:border-brand-cyan">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">Rating (1 to 5)</label>
+                        <input type="number" step="0.1
