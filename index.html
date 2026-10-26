@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <meta name="google-site-verification" content="IIssjx62FOdmPclAh-lTxC8wq4CHQpGo18p7Ys8NPTA" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ApkSphere - Professional Android Store & Downloader</title>
-  
+
   <!-- Favicon generation (Vector Shield Icon) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%232563eb'/><stop offset='100%' stop-color='%231d4ed8'/></linearGradient></defs><path d='M50 5 L85 20 V45 C85 68 70 88 50 95 C30 88 15 68 15 45 V20 Z' fill='url(%23g)'/><path d='M35 50 L45 60 L65 40' fill='none' stroke='%23ffffff' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%232563eb'/><stop offset='100%' stop-color='%231d4ed8'/></linearGradient></defs><path d='M50 5 L85 20 V45 C85 68 70 88 50 95 C30 88 15 68 15 45 V20 Z' fill='url(%23g)'/><path d='M35 50 L45 60 L65 40' fill='none' stroke='%23ffffff' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 
   <!-- Google Fonts & Lucide Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -21,26 +25,26 @@
       --bg-subtle: #f1f5f9;
       --border-color: #e2e8f0;
       --border-hover: #cbd5e1;
-      
+
       --primary: #2563eb;
       --primary-hover: #1d4ed8;
       --primary-light: #eff6ff;
       --secondary: #64748b;
-      
+
       --text-main: #0f172a;
       --text-muted: #64748b;
       --text-light: #94a3b8;
-      
+
       --success: #10b981;
       --success-light: #ecfdf5;
       --warning: #f59e0b;
       --danger: #ef4444;
-      
+
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
       --radius-xl: 24px;
-      
+
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
@@ -68,13 +72,16 @@
       width: 8px;
       height: 8px;
     }
+
     ::-webkit-scrollbar-track {
       background: var(--bg-main);
     }
+
     ::-webkit-scrollbar-thumb {
       background: var(--border-hover);
       border-radius: 4px;
     }
+
     ::-webkit-scrollbar-thumb:hover {
       background: var(--secondary);
     }
@@ -182,6 +189,7 @@
       background: var(--primary);
       color: white;
     }
+
     .btn-primary:hover {
       background: var(--primary-hover);
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
@@ -192,6 +200,7 @@
       color: var(--text-main);
       border-color: var(--border-color);
     }
+
     .btn-secondary:hover {
       background: var(--border-color);
     }
@@ -201,6 +210,7 @@
       border-color: var(--border-color);
       color: var(--text-main);
     }
+
     .btn-outline:hover {
       border-color: var(--primary);
       color: var(--primary);
@@ -212,6 +222,7 @@
       color: var(--danger);
       border-color: #fecaca;
     }
+
     .btn-danger:hover {
       background: var(--danger);
       color: white;
@@ -225,8 +236,16 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .badge-primary { background: var(--primary-light); color: var(--primary); }
-    .badge-success { background: var(--success-light); color: var(--success); }
+
+    .badge-primary {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .badge-success {
+      background: var(--success-light);
+      color: var(--success);
+    }
 
     /* Layout */
     .container {
@@ -293,7 +312,8 @@
       transition: all 0.2s;
     }
 
-    .chip:hover, .chip.active {
+    .chip:hover,
+    .chip.active {
       border-color: var(--primary);
       color: var(--primary);
       background: var(--primary-light);
@@ -451,6 +471,7 @@
       cursor: pointer;
       color: var(--text-muted);
     }
+
     .modal-close:hover {
       color: var(--text-main);
       background: var(--border-color);
@@ -520,6 +541,7 @@
       overflow: hidden;
       margin: 1rem 0 0.5rem;
     }
+
     .dl-bar {
       height: 100%;
       background: var(--primary);
@@ -538,6 +560,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Navigation -->
@@ -568,7 +591,7 @@
 
   <!-- Main Content -->
   <main class="container">
-    
+
     <!-- Admin Active Bar (Hidden by Default) -->
     <div id="adminBar" class="admin-banner" style="display: none;">
       <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -616,7 +639,8 @@
 
   <!-- Footer -->
   <footer>
-    <div style="max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div
+      style="max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
       <div>&copy; 2026 ApkSphere. Safe and Verified Android Applications.</div>
       <div>
         <a href="#" style="color: var(--text-muted); text-decoration: none; margin-left: 1rem;">Privacy Policy</a>
@@ -641,7 +665,8 @@
           <label class="form-label">Password</label>
           <input type="password" id="adminPasswordInput" class="form-control" placeholder="Enter password" required>
         </div>
-        <div id="loginError" style="color: var(--danger); font-size: 0.8rem; margin-bottom: 1rem; display: none;">Invalid admin password. Access denied.</div>
+        <div id="loginError" style="color: var(--danger); font-size: 0.8rem; margin-bottom: 1rem; display: none;">
+          Invalid admin password. Access denied.</div>
         <button type="submit" class="btn btn-primary" style="width: 100%;">Unlock Admin Dashboard</button>
       </form>
     </div>
@@ -701,12 +726,14 @@
 
         <div class="form-group">
           <label class="form-label">Direct APK Download Link *</label>
-          <input type="url" id="apkDownloadUrl" class="form-control" placeholder="https://example.com/file.apk" required>
+          <input type="url" id="apkDownloadUrl" class="form-control" placeholder="https://example.com/file.apk"
+            required>
         </div>
 
         <div class="form-group">
           <label class="form-label">App Description</label>
-          <textarea id="apkDescription" class="form-control" rows="3" placeholder="Provide detailed information about this APK package..."></textarea>
+          <textarea id="apkDescription" class="form-control" rows="3"
+            placeholder="Provide detailed information about this APK package..."></textarea>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
@@ -721,7 +748,7 @@
   <div class="modal-overlay" id="appDetailsModal">
     <div class="modal-card">
       <button class="modal-close"><i data-lucide="x"></i></button>
-      
+
       <div id="appDetailsContent">
         <!-- Dynamic Content -->
       </div>
@@ -733,7 +760,8 @@
     <div class="modal-card" style="max-width: 450px;">
       <button class="modal-close"><i data-lucide="x"></i></button>
       <h2 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Request An Application</h2>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Can't find an application or game? Let us know!</p>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Can't find an application or
+        game? Let us know!</p>
 
       <form id="requestForm">
         <div class="form-group">
@@ -791,9 +819,9 @@
       return appsData.filter(app => {
         const matchesType = activeType === "all" || app.type === activeType;
         const matchesCat = activeCategory === "all" || app.category.toLowerCase() === activeCategory.toLowerCase();
-        const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                              app.developer.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                              app.category.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          app.developer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          app.category.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesType && matchesCat && matchesSearch;
       });
     }
@@ -934,7 +962,7 @@
         const interval = setInterval(() => {
           progress += 20;
           document.getElementById("dlBar").style.width = progress + "%";
-          
+
           if (progress === 60) {
             document.getElementById("dlStatus").innerText = "Generating direct link...";
           }
@@ -955,7 +983,7 @@
     function openApkForm(item = null) {
       const modal = document.getElementById("apkFormModal");
       const title = document.getElementById("apkFormTitle");
-      
+
       if (item) {
         title.innerText = "Edit APK Entry";
         document.getElementById("apkId").value = item.id;
@@ -1027,7 +1055,7 @@
       document.getElementById("adminLoginForm").addEventListener("submit", (e) => {
         e.preventDefault();
         const pwd = document.getElementById("adminPasswordInput").value;
-        
+
         if (pwd === ADMIN_PASSWORD_HASH) {
           isAdmin = true;
           localStorage.setItem("apk_admin_active", "true");
@@ -1058,7 +1086,7 @@
       document.getElementById("apkForm").addEventListener("submit", (e) => {
         e.preventDefault();
         const id = document.getElementById("apkId").value || Date.now().toString();
-        
+
         const newApp = {
           id: id,
           name: document.getElementById("apkName").value,
@@ -1101,4 +1129,5 @@
     document.addEventListener("DOMContentLoaded", init);
   </script>
 </body>
+
 </html>
